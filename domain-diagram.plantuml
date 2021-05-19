@@ -1,0 +1,143 @@
+@startuml
+
+skinparam monochrome true
+hide circle
+
+''!$Prs = "Person"
+!$Req = "Request"
+!$Evn = "Event"
+!$Cst = "Customer"
+''!$Pmn = "Payment"
+!$Bl = "Bill"
+''!$Sl = "Sale"
+!$Rl = "Role"
+!$Rst = "Requisite"
+!$Hst = "Host"
+!$Sch = "Schedule"
+!$Acd = "Accident"
+!$Rep = "Report"
+!$Acc = "Account"
+!$Prc = "Price"
+
+!$Lst = "List"
+!$HstLst = $Hst+$Lst
+!$PrcLst = $Prc+$Lst
+
+!$ReqRep = $Req+$Rep
+!$EvnRep = $Evn+$Rep
+!$SchRep = $Sch+$Rep
+
+'Actors'
+!$Op = "Operator"
+!$Mn = "Manager"
+!$Adm = "Administrator"
+
+
+'class "$Prs" as Prs
+class "$Req" as Req {
+  eventId
+  date
+  address
+  status
+}
+class "$Evn" as Evn {
+  id
+  roles
+  requisites
+  price
+  additionalPricePerHour
+}
+class "$PrcLst" as PrcLst {
+  events
+}
+class "$Cst" as Cst {
+  isLegal
+  isRegular
+  sale
+}
+'class "$Pmn" as Pmn
+class "$Bl" as Bl {
+  paymentType
+  total
+}
+'class "$Sl" as Sl
+class "$Rl" as Rl {
+  hostId
+  isAccepted
+}
+class "$Rst" as Rst {
+  id
+  number
+}
+class "$Hst" as Hst {
+  id
+  validRoles
+}
+class "$HstLst" as HstLst {
+  hostId
+}
+class "$Sch" as Sch {
+  events
+}
+class "$Acd" as Acd {
+  id
+  date
+  description
+}
+class "$Rep" as Rep
+class "$ReqRep" as ReqRep {
+  requests
+}
+class "$EvnRep" as EvnRep {
+  events
+}
+class "$SchRep" as SchRep {
+  schedules
+}
+
+
+class "$Acc" as Acc
+class "$Op" as Op
+class "$Mn" as Mn
+class "$Adm" as Adm
+
+Cst "1" -down- "1" PrcLst : get >
+PrcLst "1" -down- "0..*" Evn : select >
+Cst "1" -right- "1..*" Req : create >
+Cst "1" -down- "1..*" Bl : pays >
+Bl "1" -down- "1..*" Evn : select $Prc >
+
+Acc <|-left- Op
+Acc <|-down- Mn
+Acc <|-up- Adm
+Acc <|-down- Hst
+
+Op "1" -down- "1..*" Req : register >
+Op "1" -down- "0..*" Acd : create >
+Op "1" -down- "0..*" Bl : create >
+
+Req "1" -down- "1" Evn : has >
+
+Evn "1" -right- "1..*" Rl : has >
+Evn "1" -left- "1..*" Rst : has >
+Evn "1" -up- "0..*" Acd : has >
+
+Hst "1" -left- "1" Rl : plays >
+Hst "1" -right- "1" Sch : has >
+
+HstLst "1" -up- "1..*" Hst : include >
+
+
+Rep <|-left- ReqRep
+Rep <|-down- EvnRep
+Rep <|-down- SchRep
+
+Mn "1" -down- "0..*" Rep : create >
+
+ReqRep "1" -down- "0..*" Req : select >
+EvnRep "1" -down- "0..*" Evn : select >
+SchRep "1" -down- "0..*" Sch : select >
+
+Adm "1" -down- "1..*" Acc : manage >
+
+@enduml
