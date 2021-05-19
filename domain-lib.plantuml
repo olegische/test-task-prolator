@@ -1,5 +1,7 @@
 @startuml
 
+'entities'
+
 ''!$Prs = "Person"
 !$Req = "Request"
 !$Evn = "Event"
@@ -23,10 +25,23 @@
 !$ReqRep = $Req+$Rep
 !$EvnRep = $Evn+$Rep
 !$SchRep = $Sch+$Rep
+!$RstRep = $Rst+$Rep
 
 'Actors'
 !$Op = "Operator"
 !$Mn = "Manager"
 !$Adm = "Administrator"
+
+'methods'
+!$reg = "register"
+!$gt = "get"
+!$cr = "create"
+!$dl = "delete"
+!$rd = "read"
+!$up = "update"
+!$acc = "accept"
+!$mn = "manage"
+!$us = "use"
+
 
 @enduml

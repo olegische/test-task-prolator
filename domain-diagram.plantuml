@@ -66,7 +66,10 @@ class "$EvnRep" as EvnRep {
 class "$SchRep" as SchRep {
   schedules
 }
-
+class "$RstRep" as RstRep {
+  requisites
+  used
+}
 
 class "$Acc" as Acc
 class "$Op" as Op
@@ -103,12 +106,15 @@ HstLst "1" -up- "1..*" Hst : include >
 Rep <|-left- ReqRep
 Rep <|-down- EvnRep
 Rep <|-down- SchRep
+Rep <|-down- RstRep
 
 Mn "1" -down- "0..*" Rep : create >
 
 ReqRep "1" -down- "0..*" Req : select >
 EvnRep "1" -down- "0..*" Evn : select >
 SchRep "1" -down- "0..*" Sch : select >
+RstRep "1" -down- "1..*" Rst : select >
+RstRep "1" -down- "0..*" Evn : select used >
 
 Adm "1" -down- "1..*" Acc : manage >
 

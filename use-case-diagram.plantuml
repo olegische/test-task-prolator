@@ -4,5 +4,58 @@
 
 skinparam monochrome true
 
+left to right direction
+'top to bottom direction
+
+actor "$Cst" as Cst
+actor "$Op" as Op
+actor "$Hst" as Hst
+actor "$Mn" as Mn
+actor "$Adm" as Adm
+
+'Operator'
+usecase "$reg $Req" as regReq
+usecase "$gt $Req Status" as gtReqSt
+usecase "$cr $Acd" as crAcd
+usecase "$up $Hst" as upHst
+usecase "$cr $Bl" as crBl
+
+'Host'
+usecase "$rd $Sch" as rdSch
+usecase "$acc $Evn" as accEvn
+
+'Manager'
+usecase "$rd $Req" as rdReq
+usecase "$cr $Rep" as crRep
+usecase "$cr $ReqRep" as crReqRep
+usecase "$cr $EvnRep" as crEvnRep
+usecase "$cr $SchRep" as crSchRep
+
+'Administrator'
+usecase "$mn $Acc" as mnAcc
+usecase "$cr $Acc" as crAcc
+usecase "$rd $Acc" as rdAcc
+usecase "$up $Acc" as upAcc
+usecase "$dl $Acc" as dlAcc
+usecase "$us $Acc" as usAcc
+
+'Customer'
+usecase "$cr $Req" as crReq
+
+Op --> regReq
+Op --> gtReqSt
+Op --> crAcd
+Op --> upHst
+Op --> crBl
+
+Hst --> rdSch
+Hst --> accEvn
+
+Mn --> rdReq
+Mn --> crRep
+
+Adm --> mnAcc
+Adm --> usAcc
+
 
 @enduml
