@@ -7,15 +7,15 @@ hide circle
 
 'class "$Prs" as Prs
 class "$Req" as Req {
-  eventId
+  event
   date
   address
   status
 }
 class "$Evn" as Evn {
-  id
   roles
   requisites
+  accidents
   price
   additionalPricePerHour
 }
@@ -34,19 +34,19 @@ class "$Bl" as Bl {
 }
 'class "$Sl" as Sl
 class "$Rl" as Rl {
-  hostId
+  host
+  event
+  type
   isAccepted
 }
 class "$Rst" as Rst {
-  id
   number
 }
 class "$Hst" as Hst {
-  id
   validRoles
 }
 class "$HstLst" as HstLst {
-  hostId
+  hosts
 }
 class "$Sch" as Sch {
   events

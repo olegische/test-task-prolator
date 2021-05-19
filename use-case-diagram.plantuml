@@ -13,49 +13,100 @@ actor "$Hst" as Hst
 actor "$Mn" as Mn
 actor "$Adm" as Adm
 
-'Operator'
-usecase "$reg $Req" as regReq
-usecase "$gt $Req Status" as gtReqSt
-usecase "$cr $Acd" as crAcd
-usecase "$up $Hst" as upHst
-usecase "$cr $Bl" as crBl
+rectangle RequestSystem {
 
-'Host'
-usecase "$rd $Sch" as rdSch
-usecase "$acc $Evn" as accEvn
+  'Operator'
+  usecase "$reg $Req" as regReq
+  usecase "$gt $Req Status" as gtReqSt
+  usecase "$cr $Acd" as crAcd
+  usecase "$up $Hst" as upHst
+  usecase "$cr $Bl" as crBl
+  usecase "$cr $Evn" as crEvn
+  usecase "$up $Evn" as upEvn
+  usecase "$rd $Evn" as rdEvn
+  usecase "$cr $Rl" as crRl
+  usecase "$up $Rl" as upRl
+  usecase "$up $Sch" as upSch
 
-'Manager'
-usecase "$rd $Req" as rdReq
-usecase "$cr $Rep" as crRep
-usecase "$cr $ReqRep" as crReqRep
-usecase "$cr $EvnRep" as crEvnRep
-usecase "$cr $SchRep" as crSchRep
+  'Host'
+  usecase "$rd $Sch" as rdSch
+  usecase "$acc $Rl" as accRl
 
-'Administrator'
-usecase "$mn $Acc" as mnAcc
-usecase "$cr $Acc" as crAcc
-usecase "$rd $Acc" as rdAcc
-usecase "$up $Acc" as upAcc
-usecase "$dl $Acc" as dlAcc
-usecase "$us $Acc" as usAcc
+  'Manager'
+  usecase "$rd $Req" as rdReq
+  usecase "$cr $Rep" as crRep
+  usecase "$cr $ReqRep" as crReqRep
+  usecase "$cr $EvnRep" as crEvnRep
+  usecase "$cr $SchRep" as crSchRep
+  usecase "$cr $RstRep" as crRstRep
 
-'Customer'
-usecase "$cr $Req" as crReq
+  'Administrator'
+  usecase "$mn $Acc" as mnAcc
+  usecase "$cr $Acc" as crAcc
+  usecase "$rd $Acc" as rdAcc
+  usecase "$up $Acc" as upAcc
+  usecase "$dl $Acc" as dlAcc
+  usecase "$us $Acc" as usAcc
+
+}
+
+rectangle AgencySite {
+
+  'Customer'
+  usecase "$cr $Req" as crReq
+  usecase "$rd $PrcLst" as rdPrcLst
+  usecase "$rd $Bl" as rdBl
+
+}
 
 Op --> regReq
+regReq .> crReq : <<include>>
+regReq ..> crEvn : <<include>>
 Op --> gtReqSt
+gtReqSt .> regReq : <<include>>
 Op --> crAcd
+crAcd ..> upEvn : <<include>>
+upEvn .> crEvn : <<include>>
 Op --> upHst
+upHst ..> upRl : <<include>>
+upRl ..> crRl : <<include>>
+crRl ..> crEvn : <<include>>
 Op --> crBl
+crBl .> regReq : <<include>>
 
 Hst --> rdSch
-Hst --> accEvn
+Hst --> accRl
+accRl ..> upRl : <<include>>
 
 Mn --> rdReq
 Mn --> crRep
 
+crEvn <.. rdEvn : <<extend>>
+regReq <.. rdReq : <<extend>>
+crEvn ..> upSch : <<include>>
+
+crRep <.. crReqRep : <<extend>>
+crReqRep ..> rdReq : <<include>>
+crRep <.. crEvnRep : <<extend>>
+crEvnRep ..> rdEvn : <<include>>
+crRep <.. crSchRep : <<extend>>
+crSchRep ..> rdSch : <<include>>
+crRep <.. crRstRep : <<extend>>
+crRstRep ..> rdEvn : <<include>>
+
 Adm --> mnAcc
 Adm --> usAcc
+
+mnAcc <.. crAcc : <<extend>>
+mnAcc <.. rdAcc : <<extend>>
+mnAcc <.. upAcc : <<extend>>
+mnAcc <.. dlAcc : <<extend>>
+
+Cst --> rdPrcLst
+Cst --> crReq
+Cst --> rdBl
+rdBl ..> crBl : <<include>>
+
 
 
 @enduml
