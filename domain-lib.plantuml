@@ -1,0 +1,32 @@
+@startuml
+
+''!$Prs = "Person"
+!$Req = "Request"
+!$Evn = "Event"
+!$Cst = "Customer"
+''!$Pmn = "Payment"
+!$Bl = "Bill"
+''!$Sl = "Sale"
+!$Rl = "Role"
+!$Rst = "Requisite"
+!$Hst = "Host"
+!$Sch = "Schedule"
+!$Acd = "Accident"
+!$Rep = "Report"
+!$Acc = "Account"
+!$Prc = "Price"
+
+!$Lst = "List"
+!$HstLst = $Hst+$Lst
+!$PrcLst = $Prc+$Lst
+
+!$ReqRep = $Req+$Rep
+!$EvnRep = $Evn+$Rep
+!$SchRep = $Sch+$Rep
+
+'Actors'
+!$Op = "Operator"
+!$Mn = "Manager"
+!$Adm = "Administrator"
+
+@enduml

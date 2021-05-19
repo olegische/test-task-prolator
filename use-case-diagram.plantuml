@@ -1,0 +1,8 @@
+@startuml
+
+!include domain-lib.plantuml
+
+skinparam monochrome true
+
+
+@enduml
